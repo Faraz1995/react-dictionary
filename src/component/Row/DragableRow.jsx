@@ -11,11 +11,11 @@ const DragableRow = ({ entry, index, dictionary, setDictionary, selectedLang }) 
       if (!ref.current) {
         return
       }
-      const dragIndex = item.index
-      const hoverIndex = index
+      const fromIndex = item.index
+      const toIndex = index
 
       // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
+      if (fromIndex === toIndex) {
         return
       }
 
@@ -33,19 +33,19 @@ const DragableRow = ({ entry, index, dictionary, setDictionary, selectedLang }) 
 
       // Only perform the move when the mouse has crossed half of the items height
       // Dragging downwards , only move when the cursor is below 50%
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      if (fromIndex < toIndex && hoverClientY < hoverMiddleY) {
         return
       }
       // Dragging upwards , only move when the cursor is above 50%
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      if (fromIndex > toIndex && hoverClientY > hoverMiddleY) {
         return
       }
-      moveItem(dragIndex, hoverIndex)
+      moveItem(fromIndex, toIndex)
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
       // to avoid expensive index searches.
-      item.index = hoverIndex
+      item.index = toIndex
     }
   })
 
