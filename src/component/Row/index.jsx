@@ -1,7 +1,7 @@
 import styles from './row.module.css'
 import { forwardRef } from 'react'
 
-const Row = forwardRef(({ translation, isDragging, entry, dragable }, ref) => {
+const Row = forwardRef(({ translation, isDragging, item, dragable }, ref) => {
   return (
     <div
       ref={ref}
@@ -9,7 +9,7 @@ const Row = forwardRef(({ translation, isDragging, entry, dragable }, ref) => {
         dragable ? styles.dragable : ''
       }`}
     >
-      <div className={styles.english}>{entry.english}</div>
+      <div className={styles.english}>{item.english}</div>
       <div className={`${styles.translation} ${!translation ? styles.missing : ''}`}>
         {translation || '......'}
       </div>

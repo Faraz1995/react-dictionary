@@ -99,10 +99,10 @@ const Admin = () => {
         </div>
         <DndProvider backend={HTML5Backend}>
           <div className={styles.container}>
-            {dictionary.map((entry, index) => (
+            {dictionary.map((item, index) => (
               <DragableRow
-                key={entry.key}
-                entry={entry}
+                key={item.key}
+                item={item}
                 index={index}
                 dictionary={dictionary}
                 setDictionary={setDictionary}

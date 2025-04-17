@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import Row from '.'
 
-const DragableRow = ({ entry, index, dictionary, setDictionary, selectedLang }) => {
+const DragableRow = ({ item, index, dictionary, setDictionary, selectedLang }) => {
   const ref = useRef(null)
 
   const [, drop] = useDrop({
@@ -61,7 +61,7 @@ const DragableRow = ({ entry, index, dictionary, setDictionary, selectedLang }) 
 
   drag(drop(ref))
 
-  const translation = entry[selectedLang]
+  const translation = item[selectedLang]
 
   const moveItem = (from, to) => {
     const updated = [...dictionary]
@@ -74,7 +74,7 @@ const DragableRow = ({ entry, index, dictionary, setDictionary, selectedLang }) 
     <Row
       dragable={true}
       ref={ref}
-      entry={entry}
+      item={item}
       translation={translation}
       isDragging={isDragging}
     />

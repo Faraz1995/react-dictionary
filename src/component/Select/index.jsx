@@ -1,4 +1,4 @@
-import styles from './select.module.scss'
+import styles from './select.module.css'
 const Select = ({ value, onChange, options }) => {
   return (
     <select className={styles.select} value={value} onChange={onChange}>
