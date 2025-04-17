@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import styles from './admin.module.css'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import Modal from '../../component/modal'
 import TextInput from '../../component/TextInput'
+import styles from './admin.module.css'
+import DragableRow from '../../component/Row/DragableRow'
 
 const LOCAL_STORAGE_KEY = 'dictionary'
-const initialData = {
-  hi: {
-    english: 'hi',
-    persian: 'سلام',
-    spanish: 'hola'
-  },
-  goodbye: {
-    english: 'goodbye',
-    persian: 'خداحافظ',
-    spanish: 'adiós'
-  },
-  book: {
-    english: 'book',
-    persian: 'کتاب',
-    spanish: ''
-  }
-}
+const initialData = [
+  { key: 'hi', english: 'hi', persian: 'سلام', spanish: 'hola' },
+  { key: 'goodbye', english: 'goodbye', persian: 'خداحافظ', spanish: 'adiós' },
+  { key: 'book', english: 'book', persian: 'کتاب', spanish: '' }
+]
 
 const Admin = () => {
-  const [dictionary, setDictionary] = useState({})
+  const [dictionary, setDictionary] = useState([])
   const [selectedLang, setSelectedLang] = useState('persian')
   const [mounted, setMounted] = useState(false)
 
@@ -46,7 +37,7 @@ const Admin = () => {
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (saved && Object.keys(JSON.parse(saved)).length > 0) {
+    if (saved && JSON.parse(saved).length > 0) {
       setDictionary(JSON.parse(saved))
     } else {
       setDictionary(initialData)
@@ -71,35 +62,22 @@ const Admin = () => {
   }
 
   const handleSubmit = () => {
-    if (!newKeyword.trim()) return
+    const key = newKeyword.trim().toLowerCase()
+    if (!key) return
 
-    const keyword = newKeyword.trim().toLowerCase()
+    const exists = dictionary.some((entry) => entry.key === key)
+    if (exists) return
 
-    setDictionary((prev) => ({
-      ...prev,
-      [keyword]: {
-        english: newKeyword.trim(),
-        persian: newPersian.trim(),
-        spanish: newSpanish.trim()
-      }
-    }))
+    const newEntry = {
+      key,
+      english: newKeyword.trim(),
+      persian: newPersian.trim(),
+      spanish: newSpanish.trim()
+    }
+
+    setDictionary((prev) => [...prev, newEntry])
 
     resetModalInfo()
-  }
-
-  const renderRows = () => {
-    return Object.entries(dictionary).map(([key, value]) => {
-      const translation = value[selectedLang]
-
-      return (
-        <div className={styles.row} key={key}>
-          <div className={styles.english}>{value.english}</div>
-          <div className={`${styles.translation} ${!translation ? styles.missing : ''}`}>
-            {translation || '.....'}
-          </div>
-        </div>
-      )
-    })
   }
 
   return (
@@ -117,7 +95,20 @@ const Admin = () => {
             <option value='spanish'>Spanish</option>
           </select>
         </div>
-        <div className={styles.container}>{renderRows()}</div>
+        <DndProvider backend={HTML5Backend}>
+          <div className={styles.container}>
+            {dictionary.map((entry, index) => (
+              <DragableRow
+                key={entry.key}
+                entry={entry}
+                index={index}
+                dictionary={dictionary}
+                setDictionary={setDictionary}
+                selectedLang={selectedLang}
+              />
+            ))}
+          </div>
+        </DndProvider>
         <button className={styles.addButton} onClick={() => setShowModal(true)}>
           + Add Keyword
         </button>
