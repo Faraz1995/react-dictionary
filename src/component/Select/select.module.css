@@ -1,0 +1,7 @@
+.select {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}

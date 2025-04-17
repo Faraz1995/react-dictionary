@@ -6,12 +6,18 @@ import Modal from '../../component/modal'
 import TextInput from '../../component/TextInput'
 import styles from './admin.module.css'
 import DragableRow from '../../component/Row/DragableRow'
+import Select from '../../component/Select'
 
 const LOCAL_STORAGE_KEY = 'dictionary'
 const initialData = [
   { key: 'hi', english: 'hi', persian: 'سلام', spanish: 'hola' },
   { key: 'goodbye', english: 'goodbye', persian: 'خداحافظ', spanish: 'adiós' },
   { key: 'book', english: 'book', persian: 'کتاب', spanish: '' }
+]
+
+const options = [
+  { value: 'persian', label: 'Persian' },
+  { value: 'spanish', label: 'Spanish' }
 ]
 
 const Admin = () => {
@@ -85,15 +91,11 @@ const Admin = () => {
       <div className={styles.root}>
         <div className={styles.header}>
           <h1>Translation Management</h1>
-
-          <select
-            className={styles.select}
+          <Select
             value={selectedLang}
             onChange={(e) => setSelectedLang(e.target.value)}
-          >
-            <option value='persian'>Persian</option>
-            <option value='spanish'>Spanish</option>
-          </select>
+            options={options}
+          />
         </div>
         <DndProvider backend={HTML5Backend}>
           <div className={styles.container}>
