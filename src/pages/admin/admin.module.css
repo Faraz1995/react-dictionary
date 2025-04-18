@@ -59,3 +59,15 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+@media all and (max-width: 768px) {
+  .root {
+    max-width: 70%;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .root {
+    max-width: 90%;
+  }
+}

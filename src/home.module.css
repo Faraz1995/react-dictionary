@@ -18,3 +18,14 @@
   align-items: center;
   margin-bottom: 1rem;
 }
+@media all and (max-width: 768px) {
+  .root {
+    max-width: 70%;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .root {
+    max-width: 90%;
+  }
+}
