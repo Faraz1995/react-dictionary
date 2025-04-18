@@ -6,7 +6,8 @@ import Row from './component/Row'
 const LOCAL_STORAGE_KEY = 'dictionary'
 const options = [
   { value: 'persian', label: 'Persian' },
-  { value: 'spanish', label: 'Spanish' }
+  { value: 'spanish', label: 'Spanish' },
+  { value: 'french', label: 'French' }
 ]
 
 function App() {

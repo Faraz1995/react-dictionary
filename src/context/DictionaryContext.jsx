@@ -4,9 +4,15 @@ const DictionaryContext = React.createContext()
 const SetDictionaryContext = React.createContext()
 
 const initialData = [
-  { key: 'hi', english: 'hi', persian: 'سلام', spanish: 'hola' },
-  { key: 'goodbye', english: 'goodbye', persian: 'خداحافظ', spanish: 'adiós' },
-  { key: 'book', english: 'book', persian: 'کتاب', spanish: '' }
+  { key: 'hi', english: 'hi', persian: 'سلام', spanish: 'hola', french: 'salut' },
+  {
+    key: 'goodbye',
+    english: 'goodbye',
+    persian: 'خداحافظ',
+    spanish: 'adiós',
+    french: 'au revoir'
+  },
+  { key: 'book', english: 'book', persian: 'کتاب', spanish: '', french: 'livre' }
 ]
 
 const LOCAL_STORAGE_KEY = 'dictionary'

@@ -14,7 +14,8 @@ import {
 
 const options = [
   { value: 'persian', label: 'Persian' },
-  { value: 'spanish', label: 'Spanish' }
+  { value: 'spanish', label: 'Spanish' },
+  { value: 'french', label: 'French' }
 ]
 
 const Admin = () => {
@@ -27,6 +28,7 @@ const Admin = () => {
   const [newKeyword, setNewKeyword] = useState('')
   const [newPersian, setNewPersian] = useState('')
   const [newSpanish, setNewSpanish] = useState('')
+  const [newFrench, setNewFrench] = useState('')
 
   const navigate = useNavigate()
 
@@ -108,6 +110,11 @@ const Admin = () => {
             placeholder='Spanish translation'
             value={newSpanish}
             onChange={(e) => setNewSpanish(e.target.value)}
+          />
+          <TextInput
+            placeholder='French translation'
+            value={newFrench}
+            onChange={(e) => setNewFrench(e.target.value)}
           />
           <div className={styles.modalActions}>
             <button className={styles.submitBtn} onClick={handleSubmit}>
