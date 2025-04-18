@@ -1,8 +1,15 @@
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import Row from '.'
+import {
+  useDictionaryContext,
+  useSetDictionaryContext
+} from '../../context/DictionaryContext'
 
-const DragableRow = ({ item, index, dictionary, setDictionary, selectedLang }) => {
+const DragableRow = ({ item, index, selectedLang }) => {
+  const dictionary = useDictionaryContext()
+  const setDictionary = useSetDictionaryContext()
+
   const ref = useRef(null)
 
   const [, drop] = useDrop({

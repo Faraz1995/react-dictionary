@@ -7,13 +7,10 @@ import TextInput from '../../component/TextInput'
 import styles from './admin.module.css'
 import DragableRow from '../../component/Row/DragableRow'
 import Select from '../../component/Select'
-
-const LOCAL_STORAGE_KEY = 'dictionary'
-const initialData = [
-  { key: 'hi', english: 'hi', persian: 'سلام', spanish: 'hola' },
-  { key: 'goodbye', english: 'goodbye', persian: 'خداحافظ', spanish: 'adiós' },
-  { key: 'book', english: 'book', persian: 'کتاب', spanish: '' }
-]
+import {
+  useDictionaryContext,
+  useSetDictionaryContext
+} from '../../context/DictionaryContext'
 
 const options = [
   { value: 'persian', label: 'Persian' },
@@ -21,18 +18,19 @@ const options = [
 ]
 
 const Admin = () => {
-  const [dictionary, setDictionary] = useState([])
+  const dictionary = useDictionaryContext()
+  const setDictionary = useSetDictionaryContext()
   const [selectedLang, setSelectedLang] = useState('persian')
-  const [mounted, setMounted] = useState(false)
 
   // Modal states
-  const [showModal, setShowModal] = useState(false)
+  const [showaddModal, setShowAddModal] = useState(false)
   const [newKeyword, setNewKeyword] = useState('')
   const [newPersian, setNewPersian] = useState('')
   const [newSpanish, setNewSpanish] = useState('')
 
   const navigate = useNavigate()
 
+  // Check if user is admin
   useEffect(() => {
     const isAdmin = localStorage.getItem('isAdmin')
     if (isAdmin !== 'true') {
@@ -40,28 +38,9 @@ const Admin = () => {
     }
   }, [])
 
-  // Load from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (saved && JSON.parse(saved).length > 0) {
-      setDictionary(JSON.parse(saved))
-    } else {
-      setDictionary(initialData)
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialData))
-    }
-    setMounted(true)
-  }, [])
-
-  // Save to localStorage whenever dictionary changes
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dictionary))
-    }
-  }, [dictionary])
-
   const resetModalInfo = () => {
     // Reset form and close modal
-    setShowModal(false)
+    setShowAddModal(false)
     setNewKeyword('')
     setNewPersian('')
     setNewSpanish('')
@@ -99,23 +78,21 @@ const Admin = () => {
         </div>
         <DndProvider backend={HTML5Backend}>
           <div className={styles.container}>
-            {dictionary.map((item, index) => (
+            {dictionary?.map((item, index) => (
               <DragableRow
                 key={item.key}
                 item={item}
                 index={index}
-                dictionary={dictionary}
-                setDictionary={setDictionary}
                 selectedLang={selectedLang}
               />
             ))}
           </div>
         </DndProvider>
-        <button className={styles.addButton} onClick={() => setShowModal(true)}>
+        <button className={styles.addButton} onClick={() => setShowAddModal(true)}>
           + Add Keyword
         </button>
       </div>
-      {showModal && (
+      {showaddModal && (
         <Modal title={'Add New Keyword'}>
           <TextInput
             placeholder='English keyword'
@@ -136,7 +113,7 @@ const Admin = () => {
             <button className={styles.submitBtn} onClick={handleSubmit}>
               Submit
             </button>
-            <button className={styles.cancelBtn} onClick={() => setShowModal(false)}>
+            <button className={styles.cancelBtn} onClick={() => setShowAddModal(false)}>
               Cancel
             </button>
           </div>
