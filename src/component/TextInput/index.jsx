@@ -1,7 +1,10 @@
 import styles from './textInput.module.css'
-const TextInput = ({ value, onChange, placeholder }) => {
+import { forwardRef } from 'react'
+
+const TextInput = forwardRef(({ value, onChange, placeholder }, ref) => {
   return (
     <input
+      ref={ref || null}
       className={styles.input}
       type='text'
       placeholder={placeholder}
@@ -9,5 +12,9 @@ const TextInput = ({ value, onChange, placeholder }) => {
       onChange={onChange}
     />
   )
-}
+})
+
+// Add a display name for the component (helpful for debugging)
+TextInput.displayName = 'TextInput'
+
 export default TextInput

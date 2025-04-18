@@ -1,11 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Modal from '../modal'
 import TextInput from '../TextInput'
 import styles from './edit.module.css'
 import { useSetDictionaryContext } from '../../context/DictionaryContext'
+
 const EditModal = ({ item, selectedLang, setOpen }) => {
   const setDictionary = useSetDictionaryContext()
   const [editValue, setEditValue] = useState('')
+  const editRef = useRef(null)
+
+  useEffect(() => {
+    // Focus the input when the component mounts
+    if (editRef.current) {
+      editRef.current.focus()
+    }
+  }, []) // Empty dependency array means this runs once on mount
 
   const saveEdit = () => {
     setDictionary((prev) => {
@@ -21,6 +30,7 @@ const EditModal = ({ item, selectedLang, setOpen }) => {
   return (
     <Modal title={'Edit ' + item.key}>
       <TextInput
+        ref={editRef}
         placeholder={`translation in ${selectedLang}`}
         value={editValue}
         onChange={(e) => setEditValue(e.target.value)}
