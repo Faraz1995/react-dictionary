@@ -28,7 +28,7 @@ const EditModal = ({ item, selectedLang, setOpen }) => {
   }
 
   return (
-    <Modal title={'Edit ' + item.key}>
+    <Modal title={'Edit ' + item.key} closeModal={() => setOpen(false)}>
       <TextInput
         ref={editRef}
         placeholder={`translation in ${selectedLang}`}

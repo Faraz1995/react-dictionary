@@ -93,7 +93,7 @@ const Admin = () => {
         </button>
       </div>
       {showaddModal && (
-        <Modal title={'Add New Keyword'}>
+        <Modal title={'Add New Keyword'} closeModal={() => setShowAddModal(false)}>
           <TextInput
             placeholder='English keyword'
             value={newKeyword}
