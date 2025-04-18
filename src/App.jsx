@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './home.module.css'
 import Select from './component/Select'
 import Row from './component/Row'
+import { Link } from 'react-router'
 
 const LOCAL_STORAGE_KEY = 'dictionary'
 const options = [
@@ -26,6 +27,9 @@ function App() {
 
   return (
     <>
+      <Link to='/admin'>
+        <p className={styles.admin}>Admin</p>
+      </Link>
       <div className={styles.root}>
         <div className={styles.header}>
           <h1>Dictionary</h1>

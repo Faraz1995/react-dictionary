@@ -36,7 +36,7 @@ const Admin = () => {
   useEffect(() => {
     const isAdmin = localStorage.getItem('isAdmin')
     if (isAdmin !== 'true') {
-      navigate('/')
+      navigate('/login')
     }
   }, [])
 

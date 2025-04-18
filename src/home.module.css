@@ -1,3 +1,9 @@
+.admin {
+  cursor: pointer;
+  color: #007bff;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
 .root {
   padding: 2rem;
   max-width: 50%;
