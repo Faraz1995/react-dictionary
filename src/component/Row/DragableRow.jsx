@@ -1,14 +1,17 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import Row from '.'
 import {
   useDictionaryContext,
   useSetDictionaryContext
 } from '../../context/DictionaryContext'
+import EditModal from '../EditModal'
 
 const DragableRow = ({ item, index, selectedLang }) => {
   const dictionary = useDictionaryContext()
   const setDictionary = useSetDictionaryContext()
+
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const ref = useRef(null)
 
@@ -77,14 +80,25 @@ const DragableRow = ({ item, index, selectedLang }) => {
     setDictionary(updated)
   }
 
+  const editRow = () => {
+    setShowEditModal(true)
+  }
+
   return (
-    <Row
-      dragable={true}
-      ref={ref}
-      item={item}
-      translation={translation}
-      isDragging={isDragging}
-    />
+    <>
+      <div onClick={editRow}>
+        <Row
+          dragable={true}
+          ref={ref}
+          item={item}
+          translation={translation}
+          isDragging={isDragging}
+        />
+      </div>
+      {showEditModal && (
+        <EditModal item={item} setOpen={setShowEditModal} selectedLang={selectedLang} />
+      )}
+    </>
   )
 }
 
